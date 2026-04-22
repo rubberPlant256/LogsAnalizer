@@ -1,0 +1,6 @@
+rootProject.name = 'LogsAnalizer'
+
+include(":logs-generator-service")
+include(":ingestion-service")
+include(":searching-service")
+include(":alerting-service")
