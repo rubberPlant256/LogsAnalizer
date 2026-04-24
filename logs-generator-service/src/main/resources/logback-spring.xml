@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="unknown-service"/>
+    <springProperty scope="context" name="KAFKA_SERVERS" source="spring.kafka.bootstrap-servers" defaultValue="localhost:9094"/>
+    <springProperty scope="context" name="KAFKA_TOPIC" source="app.kafka.topic" defaultValue="logs-topic"/>
+    <springProperty scope="context" name="KAFKA_ACKS" source="app.kafka.acks" defaultValue="1"/>
+    <springProperty scope="context" name="KAFKA_LINGER" source="app.kafka.linger" defaultValue="0"/>
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <arguments/>
+                <pattern>
+                    <pattern>
+                        {
+                        "service": "${APP_NAME}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="KAFKA" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <arguments/>
+                <pattern>
+                    <pattern>
+                        {
+                        "service": "${APP_NAME}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+
+        <topic>${KAFKA_TOPIC}</topic>
+        <producerConfig>bootstrap.servers=${KAFKA_SERVERS}</producerConfig>
+        <producerConfig>acks=${KAFKA_ACKS}</producerConfig>
+        <producerConfig>linger.ms=${KAFKA_LINGER}</producerConfig>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE" />
+        <appender-ref ref="KAFKA" />
+    </root>
+
+    <logger name="org.apache.kafka" level="WARN" additivity="false">
+        <appender-ref ref="JSON_CONSOLE" />
+    </logger>
+
+    <logger name="com.github.danielwegener.logback.kafka" level="WARN" additivity="false">
+        <appender-ref ref="JSON_CONSOLE" />
+    </logger>
+</configuration>

@@ -26,8 +26,6 @@ public class LogGeneratorService {
                 .build();
 
         logToConsole(level, message, meta);
-
-        // 4. (Скоро) sendToKafka(level, message, meta);
     }
 
     private void logToConsole(LogLevel level, String message, LogMessage meta) {
