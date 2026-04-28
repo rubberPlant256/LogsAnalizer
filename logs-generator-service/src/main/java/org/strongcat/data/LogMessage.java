@@ -1,18 +1,15 @@
 package org.strongcat.data;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LogMessage {
 
-    private UUID id;
-    private String traceId;
+  private UUID id;
+  private String traceId;
 }

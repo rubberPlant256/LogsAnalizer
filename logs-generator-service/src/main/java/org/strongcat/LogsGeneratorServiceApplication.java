@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class LogsGeneratorServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LogsGeneratorServiceApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(LogsGeneratorServiceApplication.class, args);
+  }
 }
