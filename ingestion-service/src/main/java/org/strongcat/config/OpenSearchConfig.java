@@ -33,7 +33,7 @@ public class OpenSearchConfig {
     private String password;
 
     @Bean
-    public OpenSearchClient openSearchAsyncClient() {
+    public OpenSearchClient openSearchClient() {
 
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
