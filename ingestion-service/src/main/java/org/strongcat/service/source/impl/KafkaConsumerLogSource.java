@@ -1,4 +1,4 @@
-package org.strongcat.service.source;
+package org.strongcat.service.source.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.strongcat.data.LogEntry;
 import org.strongcat.service.OpenSearchService;
-import org.strongcat.service.source.impl.LogSource;
+import org.strongcat.service.source.LogSource;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import static org.strongcat.constant.SourceType.KAFKA_SOURCE;
 @Service
 @AllArgsConstructor
 @ConditionalOnProperty(name = "app.source.type", havingValue = KAFKA_SOURCE)
-public class KafkaLogSource implements LogSource {
+public class KafkaConsumerLogSource implements LogSource {
 
     private final OpenSearchService openSearchService;
 
@@ -28,6 +28,6 @@ public class KafkaLogSource implements LogSource {
 
     @Override
     public void startListening() {
-        log.info("KafkaLogSource started and waiting for messages");
+        log.info("KafkaConsumerLogSource started and waiting for messages");
     }
 }

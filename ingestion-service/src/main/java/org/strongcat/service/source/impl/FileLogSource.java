@@ -1,4 +1,4 @@
-package org.strongcat.service.source;
+package org.strongcat.service.source.impl;
 
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.strongcat.service.OpenSearchService;
-import org.strongcat.service.source.impl.LogSource;
+import org.strongcat.service.source.util.FileLogListener;
+import org.strongcat.service.source.LogSource;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.File;

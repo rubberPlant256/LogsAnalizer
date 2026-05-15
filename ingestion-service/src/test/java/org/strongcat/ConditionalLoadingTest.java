@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.strongcat.service.OpenSearchService;
-import org.strongcat.service.source.FileLogSource;
-import org.strongcat.service.source.KafkaLogSource;
+import org.strongcat.service.source.impl.FileLogSource;
+import org.strongcat.service.source.impl.KafkaConsumerLogSource;
 import tools.jackson.databind.ObjectMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,19 +15,19 @@ class ConditionalLoadingTest {
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
             .withUserConfiguration(
-                KafkaLogSource.class,
+                KafkaConsumerLogSource.class,
                 FileLogSource.class
             )
             .withBean(OpenSearchService.class, () -> Mockito.mock(OpenSearchService.class))
             .withBean(ObjectMapper.class, () -> Mockito.mock(ObjectMapper.class));
 
     @Test
-    @DisplayName("При типе источника KAFKA должен создаваться только KafkaLogSource")
+    @DisplayName("При типе источника KAFKA должен создаваться только KafkaConsumerLogSource")
     void shouldLoadOnlyKafkaSource() {
         contextRunner
                 .withPropertyValues("app.source.type=kafka")
                 .run(context -> {
-                    assertThat(context).hasSingleBean(KafkaLogSource.class);
+                    assertThat(context).hasSingleBean(KafkaConsumerLogSource.class);
                     assertThat(context).doesNotHaveBean(FileLogSource.class);
                 });
     }
@@ -39,7 +39,7 @@ class ConditionalLoadingTest {
                 .withPropertyValues("app.source.type=file")
                 .run(context -> {
                     assertThat(context).hasSingleBean(FileLogSource.class);
-                    assertThat(context).doesNotHaveBean(KafkaLogSource.class);
+                    assertThat(context).doesNotHaveBean(KafkaConsumerLogSource.class);
                 });
     }
 
@@ -48,7 +48,7 @@ class ConditionalLoadingTest {
     void shouldLoadNoBeansWhenPropertyMissing() {
         contextRunner
                 .run(context -> {
-                    assertThat(context).doesNotHaveBean(KafkaLogSource.class);
+                    assertThat(context).doesNotHaveBean(KafkaConsumerLogSource.class);
                     assertThat(context).doesNotHaveBean(FileLogSource.class);
                 });
     }

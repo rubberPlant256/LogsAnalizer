@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @Testcontainers
 @SpringBootTest
 @ActiveProfiles("test")
-class KafkaLogSourceIT {
+class KafkaConsumerLogSourceIT {
 
     @Container
     static final KafkaContainer kafka = new KafkaContainer(

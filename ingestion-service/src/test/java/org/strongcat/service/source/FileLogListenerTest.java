@@ -9,6 +9,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.strongcat.data.LogEntry;
 import org.strongcat.service.OpenSearchService;
+import org.strongcat.service.source.util.FileLogListener;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;

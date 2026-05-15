@@ -1,4 +1,4 @@
-package org.strongcat.service.source.impl;
+package org.strongcat.service.source;
 
 public interface LogSource {
     void startListening();
