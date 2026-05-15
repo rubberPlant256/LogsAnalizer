@@ -20,8 +20,16 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.opensearch.client:opensearch-java:2.8.0'
+    implementation 'org.opensearch.client:opensearch-rest-client:2.8.0'
 }
 
 tasks.named('test') {

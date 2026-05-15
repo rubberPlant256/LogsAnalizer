@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: searching-service
+
+server:
+  port: 8082
+
+app:
+  opensearch:
+    host: localhost
+    port: 9200
+    scheme: http
+    username: admin
+    password: "!Qgdi97hk"
