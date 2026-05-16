@@ -1,7 +1,6 @@
 package org.strongcat.data;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -28,7 +27,7 @@ public class LogEntry {
     private String message;
     private String service;
 
-    @JsonIgnore
+    @Setter(AccessLevel.NONE)
     private Map<String, Object> extraFields = new HashMap<>();
 
     @JsonAnySetter
