@@ -8,6 +8,7 @@ import org.strongcat.data.LogEntry;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -29,6 +30,6 @@ public class OpenSearchService {
     }
 
     private String nameIndex(String serviceName, LocalDate date) {
-        return String.format("logs-%s-%s", serviceName, date);
+        return String.format("logs-%s-%s", Objects.requireNonNullElse(serviceName, "unknown"), date);
     }
 }
