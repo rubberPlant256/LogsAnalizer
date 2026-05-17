@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: ingestion-service
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+          json:
+            value:
+              default:
+                type: org.strongcat.data.LogEntry
+            trusted:
+              packages: "org.strongcat.*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "org.strongcat.*"
+
+server:
+  port: 8081
+
+app:
+  source:
+    type: kafka
+  kafka:
+    topic: logs-topic
+    groupId: ingestion-group
+  file:
+    path: logs/logs-generator-service.log
+
+  opensearch:
+    host: localhost
+    port: 9200
+    scheme: http
+    username: admin
+    password: "!Qgdi97hk"

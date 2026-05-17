@@ -8,6 +8,8 @@
 
     <property name="JSON_ENCODER_PATTERN" value='{ "service": "${APP_NAME}" }' />
 
+    <include resource="file-appender.xml"/>
+
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -36,6 +38,7 @@
         <root level="INFO">
             <appender-ref ref="JSON_CONSOLE" />
             <appender-ref ref="KAFKA" />
+            <appender-ref ref="JSON_FILE" />
         </root>
     </springProfile>
 

@@ -1,0 +1,13 @@
+app:
+  source:
+    type: kafka
+  kafka:
+    topic: test-logs
+    groupId: test-group
+
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
