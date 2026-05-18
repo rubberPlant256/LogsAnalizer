@@ -70,8 +70,22 @@ services:
     depends_on:
       - opensearch
 
+  postgres-alert:
+    image: postgres:latest
+    container_name: alert-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: alert-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres-alert-data:/var/lib/postgresql
+
+
 volumes:
   kafka_data:
     driver: local
   opensearch_data:
     driver: local
+  postgres-alert-data:

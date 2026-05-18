@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: alerting-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/alert-db
+    username: user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+    default-schema: public
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: hrustalevairina53@gmail.com
+    password: lesm vvby gsol pxkr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+          ssl:
+            enable: true
+
+
+server:
+  port: 8083
+
