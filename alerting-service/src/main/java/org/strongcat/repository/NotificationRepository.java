@@ -13,4 +13,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByUserId(UUID userId);
 
     List<Notification> findByPollingIntervalSecondsAndIsActiveTrue(Integer pollingIntervalSeconds);
+
+    List<Notification> findAllByIsActiveTrue();
 }

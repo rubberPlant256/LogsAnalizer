@@ -1,10 +1,18 @@
 package org.strongcat.data;
 
-public record EmailAlertContext(
-    String to,
-    String serviceName,
-    String logLevel,
-    String messageQuery,
-    long actualCount,
-    long thresholdCount
-) {}
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class EmailAlertContext {
+
+    private String to;
+    private String serviceName;
+    private String logLevel;
+    private String messageQuery;
+    private long actualCount;
+    private long thresholdCount;
+}

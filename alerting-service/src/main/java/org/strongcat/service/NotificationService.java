@@ -1,11 +1,12 @@
 package org.strongcat.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.strongcat.data.EmailAlertContext;
 import org.strongcat.data.Notification;
 import org.strongcat.dto.CreateUpdateNotificationRequest;
+import org.strongcat.event.NotificationChangedEvent;
 import org.strongcat.exception.ResourceNotFoundCustomException;
 import org.strongcat.exception.ValidationCustomException;
 import org.strongcat.repository.NotificationRepository;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
-    private final EmailSenderService emailSenderService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional(readOnly = true)
     public List<Notification> getByUserId(UUID userId) {
@@ -38,18 +39,10 @@ public class NotificationService {
         notification.setPollingIntervalSeconds(request.getPollingIntervalSeconds());
         notification.setIsActive(true);
 
-        EmailAlertContext alertContext = new EmailAlertContext(
-                notification.getEmail(),
-                notification.getServiceName(),
-                notification.getLevel(),
-                notification.getTextQuery(),
-                7,
-                notification.getThresholdCount()
-        );
+        Notification created = notificationRepository.save(notification);
+        eventPublisher.publishEvent(new NotificationChangedEvent());
 
-        emailSenderService.sendAlert(alertContext);
-
-        return notificationRepository.save(notification);
+        return created;
     }
 
     @Transactional
@@ -69,16 +62,21 @@ public class NotificationService {
         notification.setThresholdCount(request.getThresholdCount());
         notification.setPollingIntervalSeconds(request.getPollingIntervalSeconds());
 
-        return notificationRepository.save(notification);
+        Notification updated = notificationRepository.save(notification);
+        eventPublisher.publishEvent(new NotificationChangedEvent());
+
+        return updated;
     }
 
     @Transactional
-    public Notification toggleStatus(Long id, boolean isActive) {
+    public void toggleStatus(Long id, boolean isActive) {
         Notification notification = notificationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notification not found with id: " + id));
 
         notification.setIsActive(isActive);
-        return notificationRepository.save(notification);
+        notificationRepository.save(notification);
+
+        eventPublisher.publishEvent(new NotificationChangedEvent());
     }
 
     @Transactional
@@ -86,6 +84,17 @@ public class NotificationService {
         if (!notificationRepository.existsById(id)) {
             throw new RuntimeException("Notification not found with id: " + id);
         }
+
         notificationRepository.deleteById(id);
+        eventPublisher.publishEvent(new NotificationChangedEvent());
+    }
+
+    public List<Notification> findActiveRulesByInterval(Integer intervalSeconds){
+        return notificationRepository.findByPollingIntervalSecondsAndIsActiveTrue(intervalSeconds);
+    }
+
+
+    public List<Notification> findAllActiveRules() {
+        return notificationRepository.findAllByIsActiveTrue();
     }
 }

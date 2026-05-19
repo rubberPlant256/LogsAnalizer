@@ -32,17 +32,17 @@ public class EmailSenderService {
             );
 
             helper.setFrom(fromEmail);
-            helper.setTo(context.to());
-            helper.setSubject(String.format("🚨 ALERT: [%s] High Error Rate Detected", context.serviceName()));
+            helper.setTo(context.getTo());
+            helper.setSubject(String.format("🚨 ALERT: [%s] High Error Rate Detected", context.getServiceName()));
 
             String htmlContent = buildAlertHtml(context);
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
-            log.info("Alert email successfully sent to {}", context.to());
+            log.info("Alert email successfully sent to {}", context.getTo());
 
         } catch (MessagingException e) {
-            log.error("Failed to send alert email to {}. Error: {}", context.to(), e.getMessage());
+            log.error("Failed to send alert email to {}. Error: {}", context.getTo(), e.getMessage());
         }
     }
 
@@ -80,11 +80,11 @@ public class EmailSenderService {
             </body>
             </html>
             """, 
-            context.serviceName(), 
-            context.logLevel(), 
-            context.messageQuery(),
-            context.actualCount(), 
-            context.thresholdCount()
+            context.getServiceName(),
+            context.getLogLevel(),
+            context.getMessageQuery(),
+            context.getActualCount(),
+            context.getThresholdCount()
         );
     }
 }

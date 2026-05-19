@@ -39,6 +39,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    implementation 'org.opensearch.client:opensearch-java:2.8.0'
+    implementation 'org.opensearch.client:opensearch-rest-client:2.8.0'
+
 }
 
 tasks.named('test') {
