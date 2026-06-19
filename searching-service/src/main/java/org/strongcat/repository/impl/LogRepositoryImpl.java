@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.strongcat.data.LogEntry;
 import org.strongcat.dto.PagedLogResponse;
 import org.strongcat.repository.LogRepository;
-import org.strongcat.repository.util.LogQueryBuilder;
-import org.strongcat.repository.util.LogResponseMapper;
+import org.strongcat.mapper.LogResponseMapper;
 
 import java.io.IOException;
 import java.util.List;

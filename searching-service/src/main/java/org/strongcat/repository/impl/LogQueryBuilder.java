@@ -1,4 +1,4 @@
-package org.strongcat.repository.util;
+package org.strongcat.repository.impl;
 
 import org.opensearch.client.opensearch._types.FieldSort;
 import org.opensearch.client.opensearch._types.FieldValue;

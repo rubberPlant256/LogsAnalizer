@@ -1,4 +1,4 @@
-package org.strongcat.repository.util;
+package org.strongcat.mapper;
 
 import org.opensearch.client.opensearch.core.SearchResponse;
 import org.opensearch.client.opensearch.core.search.Hit;

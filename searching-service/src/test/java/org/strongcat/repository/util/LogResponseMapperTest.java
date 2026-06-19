@@ -8,8 +8,8 @@ import org.opensearch.client.opensearch.core.search.Hit;
 import org.opensearch.client.opensearch.core.search.HitsMetadata;
 import org.strongcat.data.LogEntry;
 import org.strongcat.dto.PagedLogResponse;
+import org.strongcat.mapper.LogResponseMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
